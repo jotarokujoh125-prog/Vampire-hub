@@ -1,7 +1,7 @@
 # Vampire-hub
 Interface mobile em Lua 
--- VAMPIRE HUB | RED & BLACK
--- Interface demonstrativa para projeto proprio
+-- Interface demonstrativa para projeto proprio-- VAMPIRE HUB | RED & BLACK
+-- Interface mobile demonstrativa
 
 local VampireHub = {}
 
@@ -23,6 +23,7 @@ function VampireHub.Start()
     local gui = Instance.new("ScreenGui")
     gui.Name = "VampireHub"
     gui.ResetOnSpawn = false
+    gui.DisplayOrder = 10
     gui.Parent = playerGui
 
     local main = Instance.new("Frame")
@@ -44,7 +45,8 @@ function VampireHub.Start()
     stroke.Parent = main
 
     local title = Instance.new("TextLabel")
-    title.Size = UDim2.new(1, -55, 0, 45)
+    title.Name = "Title"
+    title.Size = UDim2.new(1, -60, 0, 45)
     title.Position = UDim2.new(0, 12, 0, 0)
     title.BackgroundTransparency = 1
     title.Text = "VAMPIRE HUB"
@@ -53,6 +55,7 @@ function VampireHub.Start()
     title.TextSize = 21
     title.TextXAlignment = Enum.TextXAlignment.Left
     title.Parent = main    local minimize = Instance.new("TextButton")
+    minimize.Name = "Minimize"
     minimize.Size = UDim2.new(0, 38, 0, 34)
     minimize.Position = UDim2.new(1, -46, 0, 6)
     minimize.BackgroundColor3 = RED
@@ -67,6 +70,7 @@ function VampireHub.Start()
     minCorner.Parent = minimize
 
     local content = Instance.new("Frame")
+    content.Name = "Content"
     content.Size = UDim2.new(1, -20, 1, -60)
     content.Position = UDim2.new(0, 10, 0, 52)
     content.BackgroundTransparency = 1
@@ -78,6 +82,7 @@ function VampireHub.Start()
     layout.Parent = content
 
     local status = Instance.new("TextLabel")
+    status.Name = "Status"
     status.Size = UDim2.new(1, 0, 0, 55)
     status.BackgroundColor3 = PANEL
     status.Text = "Bem-vindo ao Vampire Hub!"
@@ -94,6 +99,7 @@ function VampireHub.Start()
 
     local function makeButton(label, message, order)
         local button = Instance.new("TextButton")
+        button.Name = "Button" .. order
         button.Size = UDim2.new(1, 0, 0, 43)
         button.BackgroundColor3 = PANEL
         button.Text = label
@@ -119,19 +125,31 @@ function VampireHub.Start()
 
     makeButton("XP e niveis", "Painel demonstrativo de XP.", 2)
     makeButton("Dinheiro", "Painel demonstrativo de dinheiro.", 3)
-    makeButton("Itens", "Painel demonstrativo de itens.", 4)
-    makeButton("Original Vampire", "Painel de progressao de vampiro.", 5)
-    makeButton("Configuracoes", "Vampire Hub v1.0", 6)
+    makeButton("Itens", "Painel demonstrativo de itens.", 4)    makeButton(
+        "Original Vampire",
+        "Painel demonstrativo de progressao.",
+        5
+    )
+
+    makeButton(
+        "Configuracoes",
+        "Vampire Hub v1.0 | Tema vermelho e preto.",
+        6
+    )
 
     local minimized = false
 
     minimize.Activated:Connect(function()
         minimized = not minimized
         content.Visible = not minimized
-        main.Size = minimized
-            and UDim2.new(0.86, 0, 0, 48)
-            or UDim2.new(0.86, 0, 0, 390)
-        minimize.Text = minimized and "+" or "-"
+
+        if minimized then
+            main.Size = UDim2.new(0.86, 0, 0, 48)
+            minimize.Text = "+"
+        else
+            main.Size = UDim2.new(0.86, 0, 0, 390)
+            minimize.Text = "-"
+        end
     end)
 end
 
